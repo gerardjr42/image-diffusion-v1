@@ -1,6 +1,7 @@
 "use client";
 
 import { usePosts } from "@/context/PostContext";
+import { UserButton } from "@clerk/nextjs";
 import { useState } from "react";
 import { Post } from "../types";
 import MasonryGrid from "./MasonryGrid";
@@ -21,7 +22,12 @@ export default function Feed() {
 
   return (
     <div className="max-w-7xl mx-auto px-4">
-      <PostForm />
+      <div className="fixed top-6 right-8 z-50">
+        <UserButton afterSignOutUrl="/" />
+      </div>
+      <div className="max-w-4xl mx-auto mb-8">
+        <PostForm />
+      </div>
       <MasonryGrid posts={posts} onExpand={handleExpand} />
       <PostModal
         post={selectedPost}
