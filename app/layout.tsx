@@ -1,5 +1,7 @@
+import { ThemeToggle } from "@/components/ThemeToggle";
 import { ClerkProvider } from "@clerk/nextjs";
 import type { Metadata } from "next";
+import { ThemeProvider } from "next-themes";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
@@ -25,11 +27,20 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider>
-      <html lang="en" className="dark">
+      <html lang="en" suppressHydrationWarning>
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
-          {children}
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="dark"
+            enableSystem
+            disableTransitionOnChange
+            storageKey="theme-preference"
+          >
+            {children}
+            <ThemeToggle />
+          </ThemeProvider>
         </body>
       </html>
     </ClerkProvider>
