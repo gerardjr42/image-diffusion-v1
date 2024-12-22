@@ -3,5 +3,5 @@ export interface Post {
   imageUrl: string;
   prompt: string;
   username: string;
+  createdAt?: string;
 }
-

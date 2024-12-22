@@ -9,7 +9,6 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { useUser } from "@clerk/nextjs";
 import { Heart, Share } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
@@ -23,7 +22,6 @@ interface PostModalProps {
 
 export default function PostModal({ post, isOpen, onClose }: PostModalProps) {
   const [isLiked, setIsLiked] = useState(false);
-  const { user } = useUser();
   if (!post) return null;
 
   return (
@@ -34,13 +32,13 @@ export default function PostModal({ post, isOpen, onClose }: PostModalProps) {
             <div className="flex items-center">
               <Avatar className="h-8 w-8 mr-2">
                 <AvatarImage
-                  src={`https://api.dicebear.com/6.x/initials/svg?seed=${
-                    user?.username || "guest"
-                  }`}
+                  src={`https://api.dicebear.com/6.x/initials/svg?seed=${post.username}`}
                 />
-                <AvatarFallback>{user?.username?.[0] || "G"}</AvatarFallback>
+                <AvatarFallback>
+                  {post.username[0].toUpperCase()}
+                </AvatarFallback>
               </Avatar>
-              <span>{user?.username || "Guest"}</span>
+              <span>{post.username}</span>
             </div>
             <div className="flex items-center gap-2">
               <Button

@@ -11,12 +11,12 @@ import { usePosts } from "../context/PostContext";
 export default function PostForm() {
   const [prompt, setPrompt] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const { addPost } = usePosts();
+  const { refreshPosts } = usePosts();
   const { user } = useUser();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!prompt) return;
+    if (!prompt || !user) return;
 
     setIsLoading(true);
 
@@ -24,12 +24,7 @@ export default function PostForm() {
       const data = await generateImage(prompt);
 
       if (data?.success) {
-        addPost({
-          id: Date.now().toString(),
-          imageUrl: data.imageUrl,
-          prompt,
-          username: user?.username || "guest",
-        });
+        await refreshPosts();
         setPrompt("");
       } else {
         console.error("Failed to generate image");
