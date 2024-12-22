@@ -9,6 +9,8 @@ export async function POST(req: Request) {
       "https://flexiformat1--example-flux-generate-image.modal.run/"
     );
 
+    console.log(prompt);
+
     url.searchParams.set("prompt", prompt);
 
     console.log("Sending request to", url.toString());
